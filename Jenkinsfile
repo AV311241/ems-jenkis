@@ -4,7 +4,7 @@ pipeline {
         stage("Install & Build") {
             agent {
                 docker {
-                    image 'node:20-alpine'
+                    image 'node:22-alpine'
                     reuseNode true
                 }
             }
@@ -19,9 +19,11 @@ pipeline {
                     echo "Clean npm cache and node_modules"
                     npm cache clean --force
                     rm -rf node_modules package-lock.json
+                    
+                    ls -la
 
                     echo "Install dependencies"
-                    npm install
+                    npm ci
 
                     echo "Build app"
                     npm run build
