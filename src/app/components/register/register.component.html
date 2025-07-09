@@ -1,0 +1,48 @@
+<div class="max-w-2xl mx-auto bg-gradient-to-br from-blue-50 via-pink-50 to-white p-10 rounded-2xl shadow-2xl border-2 border-blue-200 animate-fadeIn">
+  <h2 class="text-3xl font-extrabold text-center mb-8 bg-gradient-to-r from-blue-600 via-pink-400 to-blue-400 bg-clip-text text-transparent drop-shadow-lg animate-fadeIn">Add Employee</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="mb-6">
+        <label class="form-label">Email</label>
+        <input type="email" formControlName="email" class="form-input" placeholder="Enter email" />
+        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+          Valid email is required.
+        </div>
+      </div>
+      <div class="mb-6">
+        <label class="form-label">Username</label>
+        <input type="text" formControlName="username" class="form-input" placeholder="Enter username" />
+        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched" class="text-red-500 text-sm mt-1">
+          Username is required.
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="mb-6">
+        <label class="form-label">First Name</label>
+        <input type="text" formControlName="firstName" class="form-input" placeholder="Enter first name" />
+      </div>
+      <div class="mb-6">
+        <label class="form-label">Last Name</label>
+        <input type="text" formControlName="lastName" class="form-input" placeholder="Enter last name" />
+      </div>
+    </div>
+    <div class="mb-6">
+      <label class="form-label">Department</label>
+      <select formControlName="department" class="form-select">
+        <option value="">Select Role</option>
+        <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+      </select>
+      <div *ngIf="registerForm.get('role')?.invalid && registerForm.get('role')?.touched" class="text-red-500 text-sm mt-1">
+        Role is required.
+      </div>
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid" class="w-full btn-primary text-lg py-4 animate-bounce">
+      Add Employee
+    </button>
+  </form>
+</div>
+<style>
+@keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fadeIn { animation: fadeIn 1s cubic-bezier(0.4,0,0.2,1); }
+</style>
