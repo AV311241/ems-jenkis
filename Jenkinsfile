@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+        stage("Clear workspace"){
+            steps{
+                cleanWs()
+            }
+        } 
+
         stage("Install & Build") {
             agent {
                 docker {
@@ -27,6 +33,7 @@ pipeline {
 
                     echo "Build app"
                     npx ng build
+                    
                 '''
             }
         }
