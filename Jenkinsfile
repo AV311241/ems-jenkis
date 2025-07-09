@@ -26,7 +26,7 @@ pipeline {
                     npm ci
 
                     echo "Build app"
-                    npm run build
+                    npx ng build
                 '''
             }
         }
