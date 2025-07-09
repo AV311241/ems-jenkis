@@ -1,22 +1,32 @@
 pipeline {
     agent any
-    stages{
-        stage("build"){
+    stages {
+        stage("Install & Build") {
             agent {
                 docker {
                     image 'node:20-alpine'
                     reuseNode true
                 }
             }
-            steps{
+            steps {
                 sh '''
-                    node --version
-                    npm --version
-                    npm ci
-                    npx ng build
-                
+                    echo "Node Version:"
+                    node -v
+
+                    echo "NPM Version:"
+                    npm -v
+
+                    echo "Clean npm cache and node_modules"
+                    npm cache clean --force
+                    rm -rf node_modules package-lock.json
+
+                    echo "Install dependencies"
+                    npm install
+
+                    echo "Build app"
+                    npm run build
                 '''
             }
-        } 
+        }
     }
 }
