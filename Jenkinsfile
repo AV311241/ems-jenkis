@@ -20,7 +20,7 @@ pipeline {
 
                     echo "Clean npm cache and node_modules"
                     npm cache clean --force
-                    rm -rf node_modules package-lock.json
+                  
                     
                     ls -la
 
