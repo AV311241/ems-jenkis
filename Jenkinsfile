@@ -51,20 +51,36 @@ pipeline {
           npx ng build --configuration=production
         '''
       }
+      post {
+        success{
+          archiveArtifacts artifacts: 'dist/**'
+        }
+      }
     }
 
     stage('Test'){
+      agent {
+        docker {
+          image 'node:20'
+          reuseNode true
+          args '--network=host -u root'
+        }
+      }
         steps{
             echo "test "
             sh '''
-                pwd
-                ls 
-                cd dist
-                ls *.html
-                cd employee-management-system
-                ls *.html
+              test -f dist/employee-management-system/browser/index.html
+
+              echo "=== Run Angular tests with JUnit reporter ==="
+              npx ng test --watch=false --browsers=ChromeHeadless
             '''
         }
+      post {
+        always {
+          junit 'test-results/junit-report.xml'
+        }
+      }
     }
   }
+
 }
