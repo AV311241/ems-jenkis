@@ -1,10 +1,13 @@
+
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+
 module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-junit-reporter'),     // Add this
+      require('karma-junit-reporter'),
       require('karma-chrome-launcher'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -12,11 +15,11 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    reporters: ['progress', 'junit'],      // Add 'junit' to reporters
+    reporters: ['progress', 'junit'],  // Add 'junit' for Jenkins
     junitReporter: {
-      outputDir: 'test-results',           // Jenkins will read from here
-      outputFile: 'junit-report.xml',      // Optional single report
-      useBrowserName: false
+      outputDir: 'test-results',        // Output directory for XML files
+      outputFile: 'junit-report.xml',   // Optional single file
+      useBrowserName: false             // Avoid Chrome_Headless in filename
     },
     browsers: ['ChromeHeadless'],
     singleRun: true,
