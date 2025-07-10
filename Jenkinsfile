@@ -4,10 +4,11 @@ pipeline {
   stages {
     stage("Install & Build") {
       agent {
-        docker {
-          image 'node:20'                      
-          reuseNode true
-          args '--network=host -u root'        
+            docker {
+            image 'node:20'                      
+            reuseNode true
+            args '--network=host -u root'        
+        }
       }
 
       environment {
